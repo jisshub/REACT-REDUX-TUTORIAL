@@ -147,8 +147,68 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps)(Home);
 ```
 
+# Blog Details Page
 
-Next Up: 
-https://www.youtube.com/watch?v=SoOTQW4-tYklist=PL4cUxeGkcC9ij8CfkAY2RAGb-tmkNwQHG&index=41
+- Clicking on blog needs to lead to details page.
+- Connect **Post** component to redux store and get that individual post data.
 
+1. First import connect function from **react-redux**.
 
+**components/Post.js**
+
+```js
+import { connect } from 'react-redux';
+
+export default connect()(Post);
+```
+
+2. Create a function called *mapStateToProps* where we pass *state* and *ownProps* as argument and gets the post id from the url parameters.
+
+**components/Post.js**
+
+```js
+const mapStateToProps = (state, ownProps) => {
+    let id = ownProps.match.params.post_id;
+}
+```
+
+3. Next return the individual post data from the store object and check the *id* we got is same as the *id* of the post using the **find** method.
+**find** method cycles through the posts on the state object and returns the post object if the id matches.
+ 
+4. Finally pass the **mapStateToProps** function to **connect** function.
+
+**components/Post.js**
+
+```js
+const mapStateToProps = (state, ownProps) => {
+    let id = ownProps.match.params.post_id;
+    return {
+        post: state.find(post => post.id === id) 
+    }
+}
+
+export default connect(mapStateToProps)(Post);
+```
+
+5. Update the **render()** function by replacing *this.state.post* with *this.props.post*.
+
+**components/Post.js**
+```jsx
+render() {
+    const post = this.props.post ? (
+      <div className="post">
+        <h4 className="center">{this.props.post.title}</h4>
+        <p>{this.props.post.body}</p>
+      </div>
+    ) : (
+      <div className="center">Loading post...</div>
+    );
+
+    return (
+      <div className="container">
+        {post}
+      </div>
+    )
+  }
+}
+```
