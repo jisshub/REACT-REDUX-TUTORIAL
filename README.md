@@ -193,6 +193,7 @@ export default connect(mapStateToProps)(Post);
 5. Update the **render()** function by replacing *this.state.post* with *this.props.post*.
 
 **components/Post.js**
+
 ```jsx
 render() {
     const post = this.props.post ? (
@@ -212,3 +213,6 @@ render() {
   }
 }
 ```
+
+Next Up: https://www.youtube.com/watch?v=40pWMVMnftc
+
