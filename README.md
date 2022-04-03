@@ -216,3 +216,30 @@ render() {
 
 Next Up: https://www.youtube.com/watch?v=40pWMVMnftc
 
+# Map Dispatch To Props
+
+## Objective:
+
+### What if we want to delete a post ?
+
+**Solution:**
+
+  We have to interact with state from **Post** Component. If we want to change the state, we have to dispatch an action from the component. That action contains a **Type** to delete post or add post... also contains the optional payload. **Payload** is the ID of the post we want to delete. The action is then dispatched to the Reducer. **Reducer** then takes the action, checks the type of the action, takes in payload and changes the state. Once change is made, we get the updated props to the component. 
+
+### First we need to figure out how to dispatch action from the component. ?
+
+  We use **mapDispatchToProps** function to dispatch action from the component.
+
+  **Post.js**
+
+  ```js
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      deletePost: (id) => {dispatch({type: 'DELETE_POST', id: id})}
+    }
+  }
+  export default connect(mapStateToProps)(mapDispatchToProps)(Post);
+  ```
+
+  time- 4:00
+
