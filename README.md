@@ -238,8 +238,81 @@ Next Up: https://www.youtube.com/watch?v=40pWMVMnftc
       deletePost: (id) => {dispatch({type: 'DELETE_POST', id: id})}
     }
   }
-  export default connect(mapStateToProps)(mapDispatchToProps)(Post);
+  export default connect(mapStateToProps, mapDispatchToProps)(Post);
   ```
 
-  time- 4:00
+- Later, We add a button and call a function to delete the post. Then we pass the id of the post to the function as argument.
+
+```jsx
+
+handleClick = () => {
+    this.props.deletePost(this.props.post.id);
+};
+
+<div className='center'>
+  <button className='btn grey' onClick={this.handleClick}>
+    Delete Post
+  </button>
+</div>
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deletePost: (id) => {dispatch({type: 'DELETE_POST', id: id})}
+  }
+}
+```
+
+**Description:**
+
+We are calling the **deletePost** function while button click, passing the id of the post to the function which in turn calling the dispatch function to send the action to **rootReducer**.
+
+Screenshot Below:
+
+![](./IMAGES/image_10.png)
+
+
+- Next to finally delete the post, we have to check the type of action since we dont want to delete the action for every action.
+
+- We have to check the type of action and if it is **DELETE_POST**, then we delete the post.
+
+- If post id and action id matches, we can filter that post from the array.
+
+- Return the updated state and post to the component.
+
+**rootReducer.js**
+
+```js
+const rootReducer = (state=initState, action) => {
+  if (action.type === 'DELETE_POST') {
+    let newPosts = state.posts.filter(post => {
+      return action.id !== post.id
+    });
+    return {
+      ...state,
+      posts: newPosts
+    }
+  }
+  return state;
+}
+```
+
+**Code Description:**
+
+We are creating newPost array which will filter out the post we want to delete. Then we return the updated state along with updated posts.
+
+
+### Redirect to Home Page After Delete
+
+- We have to redirect to home page after delete. We use **history** object to redirect to home page.
+
+**Post.js**
+
+```js
+  handleClick = () => {
+    this.props.deletePost(this.props.post.id);
+    this.props.history.push('/');
+  };
+```
+
+# Action Creators
 

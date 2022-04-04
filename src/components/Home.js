@@ -37,7 +37,6 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.posts);
   return {
     posts: state.posts
   }
